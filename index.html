@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naruto Uzumaki — O Livro da Jornada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#12142b;
+    --night-2:#1c2044;
+    --orange:#ff7b29;
+    --gold:#f4b942;
+    --cream:#f5ede0;
+    --muted:#9a97b8;
+    --page:#efe6d3;
+    --page-2:#e6dabf;
+    --ink:#2b2620;
+    --brown:#8a6f4a;
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--night);
+    color:var(--cream);
+    font-family:'Bitter', serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  a{ color:inherit; }
+
+  /* ============ CAPA ============ */
+  .cover{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:60px 24px;
+    position:relative;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255,123,41,0.2), transparent 60%),
+      radial-gradient(ellipse at 20% 100%, rgba(244,185,66,0.08), transparent 50%),
+      var(--night);
+  }
+
+  .cover-spiral{
+    width:110px; height:110px; margin-bottom:24px;
+    opacity:0; animation: fadeUp 0.8s ease 0.1s forwards;
+  }
+
+  .cover-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:4px; color:var(--orange);
+    text-transform:uppercase;
+    opacity:0; animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .cover-title{
+    font-family:'Anton', sans-serif;
+    font-size:clamp(38px, 9vw, 72px);
+    line-height:0.95; letter-spacing:1px; margin:14px 0 0;
+    background:linear-gradient(180deg, var(--gold), var(--orange));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    opacity:0; animation: fadeUp 0.8s ease 0.45s forwards;
+  }
+
+  .cover-sub2{
+    font-family:'Anton', sans-serif;
+    font-size:clamp(16px, 3vw, 22px);
+    letter-spacing:3px; color:var(--muted); margin-top:8px;
+    opacity:0; animation: fadeUp 0.8s ease 0.55s forwards;
+  }
+
+  .cover-desc{
+    max-width:520px; font-size:15px; color:var(--muted); margin-top:22px;
+    opacity:0; animation: fadeUp 0.8s ease 0.65s forwards;
+  }
+
+  .cover-dedico{
+    margin-top:30px; font-family:'JetBrains Mono', monospace; font-size:12px;
+    color:var(--gold); border:1px solid rgba(244,185,66,0.35);
+    padding:10px 18px; border-radius:30px;
+    opacity:0; animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .scroll-hint{
+    margin-top:46px;
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--muted);
+    opacity:0; animation: fadeUp 0.8s ease 1s forwards, bob 2s ease 1.8s infinite;
+  }
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
+
+  /* ============ SUMÁRIO ============ */
+  .toc{
+    max-width:640px; margin:0 auto; padding:80px 24px 60px;
+  }
+
+  .toc-title{
+    font-family:'Anton', sans-serif; font-size:14px; letter-spacing:4px;
+    color:var(--orange); text-align:center; margin-bottom:36px;
+  }
+
+  .toc-part{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px;
+    color:var(--gold); margin:26px 0 10px; text-transform:uppercase;
+  }
+
+  .toc-list{ list-style:none; margin:0; padding:0; }
+
+  .toc-item{
+    display:flex; justify-content:space-between; gap:12px;
+    padding:9px 0; border-bottom:1px dashed rgba(154,151,184,0.25);
+    font-size:14px; color:#d8d2e0; text-decoration:none;
+  }
+
+  .toc-item span:last-child{ color:var(--muted); font-family:'JetBrains Mono', monospace; font-size:11px; }
+
+  /* ============ DIVISOR DE PARTE ============ */
+  .part-divider{
+    min-height:60vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:60px 24px;
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(255,123,41,0.1), transparent 65%),
+      var(--night-2);
+    border-top:1px solid rgba(244,185,66,0.15);
+    border-bottom:1px solid rgba(244,185,66,0.15);
+  }
+
+  .part-roman{
+    font-family:'Anton', sans-serif; font-size:clamp(50px,12vw,90px);
+    color:transparent; -webkit-text-stroke:2px var(--orange);
+    line-height:1; margin-bottom:14px;
+  }
+
+  .part-name{
+    font-family:'Anton', sans-serif; font-size:clamp(22px,5vw,34px);
+    color:var(--gold); letter-spacing:1px; margin-bottom:14px;
+  }
+
+  .part-desc{
+    max-width:440px; font-size:14px; color:var(--muted);
+  }
+
+  /* ============ PÁGINAS / CAPÍTULOS ============ */
+  .book{
+    max-width:680px; margin:0 auto; padding:50px 18px 20px;
+  }
+
+  .page{
+    background:
+      linear-gradient(180deg, var(--page), var(--page-2));
+    color:var(--ink);
+    border-radius:3px;
+    padding:38px 30px 34px;
+    margin-bottom:34px;
+    position:relative;
+    box-shadow:
+      0 18px 40px rgba(0,0,0,0.45),
+      inset 0 0 0 1px rgba(138,111,74,0.25);
+  }
+
+  .page::before{
+    content:'';
+    position:absolute;
+    top:0; right:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 26px 26px 0;
+    border-color:transparent rgba(43,38,32,0.12) transparent transparent;
+  }
+
+  .page-chapter{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px; letter-spacing:2px; color:var(--brown);
+    text-transform:uppercase;
+  }
+
+  .page-roman{
+    font-family:'Anton', sans-serif; font-size:34px; color:var(--orange);
+    line-height:1; margin:6px 0 4px;
+  }
+
+  .page-title{
+    font-family:'Anton', sans-serif; font-size:21px; color:var(--ink);
+    letter-spacing:0.3px; margin:0 0 16px;
+  }
+
+  .page-text p{
+    margin:0 0 14px; font-size:15px; color:#3a332a;
+  }
+
+  .page-text p:first-of-type::first-letter{
+    font-family:'Anton', sans-serif;
+    font-size:52px; float:left; line-height:0.8;
+    padding:6px 8px 0 0; color:var(--orange);
+  }
+
+  .page-tag{
+    display:inline-block; margin-top:6px;
+    font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--brown);
+    border:1px solid rgba(138,111,74,0.4); padding:3px 10px; border-radius:20px;
+  }
+
+  /* ============ GALERIA DE PERSONAGENS ============ */
+  .gallery-intro{
+    max-width:640px; margin:0 auto; padding:60px 24px 10px; text-align:center;
+  }
+
+  .gallery-intro h2{
+    font-family:'Anton', sans-serif; font-size:26px; color:var(--gold); margin-bottom:12px;
+  }
+
+  .gallery-intro p{ color:var(--muted); font-size:14px; max-width:480px; margin:0 auto; }
+
+  .gallery{
+    max-width:900px; margin:0 auto;
+    display:grid; grid-template-columns:1fr; gap:18px;
+    padding:36px 20px 20px;
+  }
+
+  @media (min-width:640px){
+    .gallery{ grid-template-columns:1fr 1fr; }
+  }
+
+  .char-card{
+    background:var(--night-2);
+    border:1px solid rgba(244,185,66,0.15);
+    border-radius:8px;
+    padding:22px;
+    display:flex; gap:16px; align-items:flex-start;
+  }
+
+  .char-icon{
+    width:48px; height:48px; flex-shrink:0; border-radius:50%;
+    border:2px solid rgba(255,123,41,0.4);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--orange);
+    background:radial-gradient(circle, rgba(255,123,41,0.1), transparent 70%);
+  }
+
+  .char-icon svg{ width:24px; height:24px; }
+
+  .char-name{
+    font-family:'Anton', sans-serif; font-size:16px; color:var(--cream);
+    letter-spacing:0.3px; margin-bottom:6px;
+  }
+
+  .char-desc{ font-size:13px; color:#c9c4dc; line-height:1.6; }
+
+  /* ============ CURIOSIDADES ============ */
+  .trivia{
+    max-width:640px; margin:0 auto; padding:60px 24px 30px;
+  }
+
+  .trivia h2{
+    font-family:'Anton', sans-serif; font-size:24px; color:var(--gold);
+    text-align:center; margin-bottom:30px;
+  }
+
+  .trivia-item{
+    display:flex; gap:14px; padding:14px 0; border-bottom:1px dashed rgba(154,151,184,0.2);
+    font-size:14px; color:#d8d2e0;
+  }
+
+  .trivia-num{
+    font-family:'JetBrains Mono', monospace; color:var(--orange); flex-shrink:0; font-size:13px;
+  }
+
+  /* ============ ENCERRAMENTO ============ */
+  .closing{
+    max-width:560px; margin:0 auto; padding:70px 24px 100px; text-align:center;
+  }
+
+  .closing-line{ width:60px; height:3px; background:var(--orange); margin:0 auto 26px; border-radius:2px; }
+  .closing-title{ font-family:'Anton', sans-serif; font-size:24px; color:var(--gold); margin-bottom:16px; }
+  .closing-text{ font-size:15px; color:#d8d2e0; margin-bottom:26px; }
+  .closing-sign{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--muted); letter-spacing:1px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; opacity:1 !important; transform:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<section class="cover" id="capa">
+  <svg class="cover-spiral" viewBox="0 0 100 100">
+    <path d="M50 10 C72 10, 90 28, 90 50 C90 68, 76 82, 58 82 C44 82, 34 72, 34 60 C34 50, 42 42, 52 42 C60 42, 66 48, 66 56"
+      fill="none" stroke="#ff7b29" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <div class="cover-eyebrow">Uma homenagem shinobi · edição especial</div>
+  <h1 class="cover-title">NARUTO<br>UZUMAKI</h1>
+  <div class="cover-sub2">O LIVRO DA JORNADA</div>
+  <p class="cover-desc">Do garoto que ninguém queria olhar nos olhos, ao ninja que uniu o mundo inteiro. Dezesseis capítulos contando a trajetória completa — infância, amizades, perdas, guerra e o sonho que nunca morreu.</p>
+  <div class="cover-dedico">✦ PARA ANDERSON "CARECA" RODRIGO ✦</div>
+  <div class="scroll-hint">abra o livro ↓</div>
+</section>
+
+<!-- ============ SUMÁRIO ============ -->
+<section class="toc">
+  <div class="toc-title">SUMÁRIO</div>
+
+  <div class="toc-part">Parte I · A Semente</div>
+  <ul class="toc-list">
+    <li class="toc-item"><a href="#cap1">I. Um Selo e Uma Solidão</a> <span>infância</span></li>
+    <li class="toc-item"><a href="#cap2">II. O Pior Aluno da Turma</a> <span>academia</span></li>
+    <li class="toc-item"><a href="#cap3">III. Um Pergaminho e Uma Virada</a> <span>graduação</span></li>
+    <li class="toc-item"><a href="#cap4">IV. O Time Que Ninguém Esperava</a> <span>time 7</span></li>
+    <li class="toc-item"><a href="#cap5">V. A Ponte Que Ele Cruzou</a> <span>país das ondas</span></li>
+    <li class="toc-item"><a href="#cap6">VI. Provas de Fogo</a> <span>exame chunin</span></li>
+    <li class="toc-item"><a href="#cap7">VII. A Sombra Que Se Aproxima</a> <span>invasão</span></li>
+    <li class="toc-item"><a href="#cap8">VIII. A Partida</a> <span>vale do fim</span></li>
+  </ul>
+
+  <div class="toc-part">Parte II · O Ninja Errante</div>
+  <ul class="toc-list">
+    <li class="toc-item"><a href="#cap9">IX. Dois Anos e Meio</a> <span>treinamento</span></li>
+    <li class="toc-item"><a href="#cap10">X. Um Mundo em Chamas</a> <span>shippuden</span></li>
+    <li class="toc-item"><a href="#cap11">XI. O Mestre Cai</a> <span>perda</span></li>
+    <li class="toc-item"><a href="#cap12">XII. Chuva de Dor, Escolha de Perdão</a> <span>o ataque</span></li>
+  </ul>
+
+  <div class="toc-part">Parte III · A Guerra e o Legado</div>
+  <ul class="toc-list">
+    <li class="toc-item"><a href="#cap13">XIII. Um Exército de Antigos Inimigos</a> <span>grande guerra</span></li>
+    <li class="toc-item"><a href="#cap14">XIV. O Peso da Raposa</a> <span>kurama</span></li>
+    <li class="toc-item"><a href="#cap15">XV. Duas Verdades, Um Só Golpe</a> <span>reencontro</span></li>
+    <li class="toc-item"><a href="#cap16">XVI. O Menino Que Virou Hokage</a> <span>epílogo</span></li>
+  </ul>
+</section>
+
+<!-- ============ PARTE I ============ -->
+<div class="part-divider">
+  <div class="part-roman">I</div>
+  <div class="part-name">A SEMENTE</div>
+  <p class="part-desc">Antes de qualquer batalha épica, houve um menino sozinho tentando ser visto. Tudo começa aqui.</p>
+</div>
+
+<div class="book">
+
+  <div class="page" id="cap1">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">I</div>
+    <h2 class="page-title">Um Selo e Uma Solidão</h2>
+    <div class="page-text">
+      <p>Na noite em que nasceu, uma fera de nove caudas devastou sua vila e roubou dele os pais que jamais chegaria a conhecer. Para conter aquele poder monstruoso, os líderes da Vila da Folha tomaram uma decisão que marcaria toda a sua vida: selar a fera dentro do único ser que ainda não tinha escolha própria — um recém-nascido.</p>
+      <p>Cresceu sem saber por que era evitado, por que os adultos desviavam o olhar, por que não tinha com quem comemorar aniversário. Mas havia algo nele que se recusava a se apagar: um sorriso teimoso e um sonho grande demais pra um garoto tão sozinho — ser reconhecido por todos, um dia, como o líder da própria vila.</p>
+    </div>
+    <span class="page-tag">infância</span>
+  </div>
+
+  <div class="page" id="cap2">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">II</div>
+    <h2 class="page-title">O Pior Aluno da Turma</h2>
+    <div class="page-text">
+      <p>Na academia ninja, era o último em quase tudo — notas baixas, técnicas que davam errado, paciência zero pra ficar sentado ouvindo teoria. Compensava isso do único jeito que sabia: aprontando confusões cada vez maiores, só pra ser notado por alguém, nem que fosse com bronca.</p>
+      <p>Foi um professor chamado Iruka que primeiro enxergou além da bagunça. Não o via como o garoto que carregava a fera — via só um menino carente de atenção que ninguém tinha dado o mínimo de chance. Essa diferença, pequena aos olhos dos outros, foi enorme pra ele.</p>
+    </div>
+    <span class="page-tag">academia ninja</span>
+  </div>
+
+  <div class="page" id="cap3">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">III</div>
+    <h2 class="page-title">Um Pergaminho e Uma Virada</h2>
+    <div class="page-text">
+      <p>Reprovou no exame de graduação mais uma vez. Foi nesse momento de maior fragilidade que um dos próprios professores tentou se aproveitar dele, convencendo-o a roubar um pergaminho proibido cheio de técnicas perigosas — prometendo que aquilo seria o caminho pra finalmente virar ninja.</p>
+      <p>Foi armadilha, mas se transformou em virada: aprendeu sozinho, na noite, uma técnica avançada de clones de sombra, e a usou pra proteger o próprio Iruka de um ataque de verdade. Naquela noite, ganhou não só a graduação, mas a primeira pessoa que disse, com sinceridade, que tinha orgulho dele.</p>
+    </div>
+    <span class="page-tag">graduação</span>
+  </div>
+
+  <div class="page" id="cap4">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">IV</div>
+    <h2 class="page-title">O Time Que Ninguém Esperava</h2>
+    <div class="page-text">
+      <p>Formado em equipe com um rival brilhante e arrogante e uma colega decidida a se destacar, sob o comando de um sensei enigmático conhecido por copiar técnicas alheias, parecia a combinação mais improvável possível.</p>
+      <p>O teste de sobrevivência que deveria uni-los quase os separou — até perceberem, na marra, que a prova nunca foi sobre pegar sinos sozinho. Era sobre aprender que ninguém, nem o mais talentoso, vence nada de verdade sem confiar em quem está do seu lado.</p>
+    </div>
+    <span class="page-tag">time 7</span>
+  </div>
+
+  <div class="page" id="cap5">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">V</div>
+    <h2 class="page-title">A Ponte Que Ele Cruzou</h2>
+    <div class="page-text">
+      <p>A primeira missão fora da vila deveria ser simples: escoltar um construtor de pontes. Virou, em vez disso, o primeiro encontro real com a morte — um ninja renegado disposto a matar, e um jovem tão perigoso quanto triste, criado pra ser apenas uma arma.</p>
+      <p>Foi ali que entendeu, sentindo o peso de verdade, o que significa lutar por alguém. Não pela missão, não pela recompensa — pela pessoa ao seu lado. Voltou pra casa diferente, e a ponte que ajudaram a terminar levou o nome que os moradores escolheram em homenagem a ele.</p>
+    </div>
+    <span class="page-tag">país das ondas</span>
+  </div>
+
+  <div class="page" id="cap6">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">VI</div>
+    <h2 class="page-title">Provas de Fogo</h2>
+    <div class="page-text">
+      <p>O exame que decide quem sobe de rank o levou a uma floresta traiçoeira e a combates cada vez mais brutais. Foi nesse cenário de pressão máxima que cruzou o caminho de um garoto de outra vila — carregando, como ele, uma fera selada dentro de si.</p>
+      <p>A diferença é que aquele garoto tinha escolhido o ódio como resposta pra própria solidão. Olhar pra ele foi, de certa forma, olhar pro que ele mesmo poderia ter se tornado se alguém não tivesse, um dia, decidido enxergá-lo.</p>
+    </div>
+    <span class="page-tag">exame chunin</span>
+  </div>
+
+  <div class="page" id="cap7">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">VII</div>
+    <h2 class="page-title">A Sombra Que Se Aproxima</h2>
+    <div class="page-text">
+      <p>No meio dos exames, a vila foi tomada de surpresa por uma invasão orquestrada por um antigo aluno da Folha, agora um dos inimigos mais perigosos do mundo shinobi. A batalha custou a vida do líder mais querido da vila, o Terceiro Hokage.</p>
+      <p>A dor da perda pesou sobre todos, e sobre ele de um jeito particular: entendeu, ali, o quanto ainda precisava crescer pra proteger o pouco que já considerava seu.</p>
+    </div>
+    <span class="page-tag">invasão a konoha</span>
+  </div>
+
+  <div class="page" id="cap8">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">VIII</div>
+    <h2 class="page-title">A Partida</h2>
+    <div class="page-text">
+      <p>Consumido pela sede de poder pra vingar seu clã, o melhor amigo decidiu abandonar a vila e seguir para o lado de um dos ninjas mais perigosos vivos. Ele foi atrás, decidido a trazê-lo de volta nem que fosse na base da força.</p>
+      <p>A batalha na fronteira que os separou foi das mais dolorosas de sua vida — e ele perdeu. Mas, em vez de deixar aquele amigo ir embora de sua história, fez uma promessa silenciosa que carregaria pelos anos seguintes: um dia, o traria de volta pra casa.</p>
+    </div>
+    <span class="page-tag">vale do fim</span>
+  </div>
+
+</div>
+
+<!-- ============ PARTE II ============ -->
+<div class="part-divider">
+  <div class="part-roman">II</div>
+  <div class="part-name">O NINJA ERRANTE</div>
+  <p class="part-desc">Mais forte, mais maduro — mas ainda com a mesma promessa pesando no peito.</p>
+</div>
+
+<div class="book">
+
+  <div class="page" id="cap9">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">IX</div>
+    <h2 class="page-title">Dois Anos e Meio</h2>
+    <div class="page-text">
+      <p>Longe da vila, ao lado de um mestre excêntrico que se tornou quase um pai, mergulhou num treinamento intenso. Aprendeu a dominar uma técnica de concentração de chakra tão difícil que poucos ninjas na história haviam conseguido controlar.</p>
+      <p>Mais do que técnicas, começou a fazer as pazes com a força que vivia dentro dele havia toda a vida — não mais como um fardo imposto, mas como algo que, com esforço, poderia aprender a manejar.</p>
+    </div>
+    <span class="page-tag">treinamento</span>
+  </div>
+
+  <div class="page" id="cap10">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">X</div>
+    <h2 class="page-title">Um Mundo em Chamas</h2>
+    <div class="page-text">
+      <p>De volta à vila, mais alto, mais forte e visivelmente mais maduro, descobriu que o perigo que rondava sua vida nunca tinha sido só sobre ele. Uma organização das sombras, formada por criminosos de rank altíssimo, caçava sistematicamente pessoas que carregavam feras seladas espalhadas pelo mundo inteiro.</p>
+      <p>O reencontro com velhos amigos veio acompanhado da certeza de que o mundo era bem maior — e bem mais perigoso — do que ele imaginava quando só sonhava em virar Hokage.</p>
+    </div>
+    <span class="page-tag">shippuden</span>
+  </div>
+
+  <div class="page" id="cap11">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">XI</div>
+    <h2 class="page-title">O Mestre Cai</h2>
+    <div class="page-text">
+      <p>Em uma missão de investigação contra o líder daquela organização, seu mestre e mentor caiu em batalha. A notícia foi um dos golpes mais duros que já tinha recebido — perder, de novo, alguém que se aproximava do que seria ter um pai.</p>
+      <p>Mas escondida nas últimas ações do mestre havia uma mensagem cifrada, deixada de propósito. Decifrá-la, tempos depois, se tornaria a peça-chave para salvar a própria vila de uma destruição ainda maior.</p>
+    </div>
+    <span class="page-tag">perda</span>
+  </div>
+
+  <div class="page" id="cap12">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">XII</div>
+    <h2 class="page-title">Chuva de Dor, Escolha de Perdão</h2>
+    <div class="page-text">
+      <p>O mesmo inimigo que matara seu mestre atacou a Vila da Folha com um poder devastador, reduzindo boa parte dela a escombros. Naruto enfrentou-o cara a cara — e descobriu que aquele homem, por trás de toda a destruição, também carregava uma história de perdas e dor profunda.</p>
+      <p>Em vez de responder com mais violência, escolheu tentar entender. Essa escolha, mais do que qualquer jutsu, foi o que finalmente fez a vila inteira — que um dia o evitava — passar a enxergá-lo como o herói que sempre quis ser.</p>
+    </div>
+    <span class="page-tag">o ataque</span>
+  </div>
+
+</div>
+
+<!-- ============ PARTE III ============ -->
+<div class="part-divider">
+  <div class="part-roman">III</div>
+  <div class="part-name">A GUERRA E O LEGADO</div>
+  <p class="part-desc">Quando o mundo inteiro precisou de alguém em quem acreditar, ele já sabia bem o que fazer.</p>
+</div>
+
+<div class="book">
+
+  <div class="page" id="cap13">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">XIII</div>
+    <h2 class="page-title">Um Exército de Antigos Inimigos</h2>
+    <div class="page-text">
+      <p>A ameaça cresceu tanto que vilas rivais, que haviam se enfrentado em guerras por gerações, precisaram se unir sob uma única aliança. O objetivo do inimigo: capturar todas as feras seladas do mundo, incluindo aquela que vivia dentro dele.</p>
+      <p>Em meio ao caos de uma guerra em escala mundial, foi justamente sua crença simples — de que ninguém deveria ser abandonado ou descartado — que virou o combustível emocional de todo o exército aliado.</p>
+    </div>
+    <span class="page-tag">grande guerra</span>
+  </div>
+
+  <div class="page" id="cap14">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">XIV</div>
+    <h2 class="page-title">O Peso da Raposa</h2>
+    <div class="page-text">
+      <p>Durante a guerra, finalmente teve a chance de conversar de verdade com a fera selada dentro dele — não mais como carcereiro e prisioneiro, mas quase como parceiros forçados a confiar um no outro. Também descobriu, enfim, a verdade sobre os pais que nunca conheceu e o motivo real por trás do selamento.</p>
+      <p>Essa reconciliação interna lhe deu acesso a um novo nível de poder, mas o mais importante não foi a força — foi entender que aquilo que sempre o isolou também podia ser, agora, sua maior fonte de coragem.</p>
+    </div>
+    <span class="page-tag">kurama</span>
+  </div>
+
+  <div class="page" id="cap15">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">XV</div>
+    <h2 class="page-title">Duas Verdades, Um Só Golpe</h2>
+    <div class="page-text">
+      <p>Anos depois da partida, o reencontro definitivo com o amigo que jurou trazer de volta aconteceu numa batalha devastadora, quase até o limite físico dos dois. Socos, técnicas poderosas, tudo o que aprenderam ao longo da jornada foi colocado à prova.</p>
+      <p>Mas o que realmente encerrou aquela rivalidade não foi o golpe mais forte. Foi finalmente serem sinceros um com o outro sobre a dor, o ciúme e o carinho que carregavam desde os tempos de time 7.</p>
+    </div>
+    <span class="page-tag">reencontro</span>
+  </div>
+
+  <div class="page" id="cap16">
+    <div class="page-chapter">Capítulo</div>
+    <div class="page-roman">XVI</div>
+    <h2 class="page-title">O Menino Que Virou Hokage</h2>
+    <div class="page-text">
+      <p>O garoto em quem quase ninguém apostava, que crescia sozinho e brigava por atenção, se tornou o líder responsável por proteger toda a vila que um dia o rejeitou. Constituiu família, viu nascer uma nova geração de ninjas e passou a carregar, com orgulho, o título que sonhava desde criança.</p>
+      <p>No fim, a história nunca foi sobre se tornar o mais forte. Foi sobre provar, um dia de cada vez, que merecia ser visto — mesmo quando tudo ao redor dizia o contrário.</p>
+    </div>
+    <span class="page-tag">sétimo hokage</span>
+  </div>
+
+</div>
+
+<!-- ============ GALERIA DE PERSONAGENS ============ -->
+<section class="gallery-intro">
+  <h2>Quem Fez Parte Dessa História</h2>
+  <p>Nenhuma jornada se constrói sozinha. Esses foram alguns dos nomes que mudaram o rumo da vida dele.</p>
+</section>
+
+<div class="gallery">
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="20" x2="20" y2="80" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></div>
+    <div>
+      <div class="char-name">O Rival</div>
+      <div class="char-desc">Colega de time e, por muito tempo, o padrão que ele tentava alcançar. A rivalidade entre os dois é o fio condutor de boa parte da história — feita de inveja, admiração e, no fim, um respeito que nenhum dos dois sabia como admitir.</div>
+    </div>
+  </div>
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="6"/><path d="M50 20 Q56 36 50 50 Q44 36 50 20" fill="currentColor"/><path d="M80 50 Q64 56 50 50 Q64 44 80 50" fill="currentColor"/><path d="M50 80 Q44 64 50 50 Q56 64 50 80" fill="currentColor"/><path d="M20 50 Q36 44 50 50 Q36 56 20 50" fill="currentColor"/></svg></div>
+    <div>
+      <div class="char-name">A Colega de Time</div>
+      <div class="char-desc">No início, mal reparava nele. Com o tempo, virou uma das pessoas em quem mais confiava — e uma ninja médica cuja força de vontade cresceu junto com a dele.</div>
+    </div>
+  </div>
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="6"/><line x1="30" y1="50" x2="70" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
+    <div>
+      <div class="char-name">O Sensei</div>
+      <div class="char-desc">Distante e enigmático no início, escondendo as próprias perdas atrás de um livro e uma máscara. Se tornou, aos poucos, o adulto que mais o guiou nos primeiros passos como ninja de verdade.</div>
+    </div>
+  </div>
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><path d="M50 20 C64 20 74 32 74 46 C74 58 65 66 54 66 C46 66 40 60 40 52" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="78" r="6" fill="currentColor"/></svg></div>
+    <div>
+      <div class="char-name">O Mestre</div>
+      <div class="char-desc">Excêntrico, gente boa, um tanto irresponsável — mas o adulto que mais se aproximou de ser um pai. Foi quem o levou a dar o salto de garoto pra ninja de verdade, e sua perda marcou pra sempre a trajetória dele.</div>
+    </div>
+  </div>
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><path d="M50 20 C68 20 82 34 82 50 C82 64 70 74 56 74" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="currentColor"/></svg></div>
+    <div>
+      <div class="char-name">O Espelho</div>
+      <div class="char-desc">Outro garoto que cresceu isolado por carregar uma fera selada — mas que escolheu um caminho de ódio. Sua história funciona como reflexo do que Naruto poderia ter se tornado, e depois, como um dos aliados mais leais que ele conquista.</div>
+    </div>
+  </div>
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><path d="M30 30 L70 70 M30 70 L70 30" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="26" fill="none" stroke="currentColor" stroke-width="4"/></svg></div>
+    <div>
+      <div class="char-name">O Irmão Mais Velho</div>
+      <div class="char-desc">Figura envolta em mistério e tragédia, ligado ao passado do rival de Naruto. Sua história, revelada aos poucos, muda completamente a forma como se entende boa parte do conflito central da trama.</div>
+    </div>
+  </div>
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><path d="M50 25 C36 25 26 38 26 52 C26 66 36 78 50 78 C64 78 74 66 74 52 C74 38 64 25 50 25 Z" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="52" r="7" fill="currentColor"/></svg></div>
+    <div>
+      <div class="char-name">A Admiradora Silenciosa</div>
+      <div class="char-desc">Uma colega tímida que acreditava nele muito antes de qualquer vitória famosa. Sua paciência silenciosa e coragem discreta acabam se tornando parte importante da vida adulta de Naruto.</div>
+    </div>
+  </div>
+
+  <div class="char-card">
+    <div class="char-icon"><svg viewBox="0 0 100 100"><path d="M50 20 C64 20 78 34 78 50 C78 64 66 74 52 74 C42 74 34 66 34 56 C34 48 41 42 49 42 C55 42 60 47 60 53" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M50 20 L38 8 M50 20 L62 8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>
+    <div>
+      <div class="char-name">A Fera Selada</div>
+      <div class="char-desc">Presa dentro dele desde o nascimento, começou como puro ódio e desconfiança. Ao longo da história, a relação entre os dois passa de cárcere forçado pra uma parceria genuína — um dos arcos mais bonitos de toda a saga.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ CURIOSIDADES ============ -->
+<section class="trivia">
+  <h2>Curiosidades</h2>
+
+  <div class="trivia-item">
+    <div class="trivia-num">01</div>
+    <div>A história foi criada pelo mangaká japonês Masashi Kishimoto e publicada em capítulos semanais por quase 15 anos antes de chegar ao capítulo final.</div>
+  </div>
+
+  <div class="trivia-item">
+    <div class="trivia-num">02</div>
+    <div>A saga se divide oficialmente em duas fases: a primeira acompanha Naruto ainda adolescente, e a segunda — conhecida por um subtítulo próprio — o acompanha já mais maduro, anos depois.</div>
+  </div>
+
+  <div class="trivia-item">
+    <div class="trivia-num">03</div>
+    <div>É uma das franquias de mangá e anime mais vendidas e traduzidas do mundo, com desdobramentos em filmes, jogos e uma série derivada centrada no filho de Naruto.</div>
+  </div>
+
+  <div class="trivia-item">
+    <div class="trivia-num">04</div>
+    <div>A técnica de clones de sombra, marca registrada do personagem, é também uma das primeiras a mostrar que força bruta sozinha nunca foi o ponto central da história.</div>
+  </div>
+
+  <div class="trivia-item">
+    <div class="trivia-num">05</div>
+    <div>O nome do prato de macarrão favorito do personagem virou, entre os fãs, quase um símbolo tão reconhecível quanto a própria bandana ninja que ele usa.</div>
+  </div>
+</section>
+
+<!-- ============ ENCERRAMENTO ============ -->
+<section class="closing">
+  <div class="closing-line"></div>
+  <div class="closing-title">O QUE FICA DESSA HISTÓRIA</div>
+  <p class="closing-text">Naruto nunca foi sobre nascer especial. Foi sobre continuar tentando quando ninguém apostava, transformar rejeição em propósito, e nunca deixar o "não dá" virar a última palavra.<br><br>
+  É por isso que essa jornada combina tanto com você, Anderson. Nunca desistir não é um detalhe — é a sua marca registrada.</p>
+  <div class="closing-sign">feito com carinho pelo Irmão Claudio</div>
+</section>
+
+</body>
+</html>
