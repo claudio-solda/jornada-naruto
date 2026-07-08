@@ -55,6 +55,12 @@
     opacity:0; animation: fadeUp 0.8s ease 0.1s forwards;
   }
 
+  .headband{
+    width:190px; height:auto; margin-bottom:22px;
+    opacity:0; animation: fadeUp 0.8s ease 0.15s forwards;
+    filter: drop-shadow(0 6px 14px rgba(0,0,0,0.45));
+  }
+
   .cover-eyebrow{
     font-family:'JetBrains Mono', monospace;
     font-size:12px; letter-spacing:4px; color:var(--orange);
@@ -295,9 +301,23 @@
 
 <!-- ============ CAPA ============ -->
 <section class="cover" id="capa">
-  <svg class="cover-spiral" viewBox="0 0 100 100">
-    <path d="M50 10 C72 10, 90 28, 90 50 C90 68, 76 82, 58 82 C44 82, 34 72, 34 60 C34 50, 42 42, 52 42 C60 42, 66 48, 66 56"
-      fill="none" stroke="#ff7b29" stroke-width="6" stroke-linecap="round"/>
+  <svg class="headband" viewBox="0 0 260 130" xmlns="http://www.w3.org/2000/svg">
+    <!-- tiras de tecido -->
+    <path d="M20 65 C 8 90, 4 112, 14 128 L 34 122 C 26 106, 28 88, 38 70 Z" fill="#1c2044" stroke="#0d0f22" stroke-width="2"/>
+    <path d="M240 65 C 252 90, 256 112, 246 128 L 226 122 C 234 106, 232 88, 222 70 Z" fill="#1c2044" stroke="#0d0f22" stroke-width="2"/>
+    <!-- faixa de pano -->
+    <rect x="6" y="46" width="248" height="30" rx="3" fill="#1c2044" stroke="#0d0f22" stroke-width="2"/>
+    <!-- placa metálica -->
+    <rect x="34" y="18" width="192" height="66" rx="6" fill="#c7ccd6" stroke="#7d828e" stroke-width="3"/>
+    <rect x="42" y="26" width="176" height="50" rx="3" fill="#aeb4c0" stroke="#8a8f9c" stroke-width="1.5"/>
+    <!-- brilho -->
+    <path d="M48 30 L64 30 L52 72 L40 72 Z" fill="#e8ebf0" opacity="0.55"/>
+    <!-- simbolo da vila (folha estilizada) -->
+    <g transform="translate(130,51)">
+      <circle r="24" fill="#aeb4c0" stroke="#7d828e" stroke-width="2"/>
+      <path d="M0 -17 C 9 -14, 13 -5, 9 4 C 15 2, 19 -4, 20 -11 C 22 -2, 19 8, 10 13 C 15 15, 21 14, 25 10 C 21 19, 11 23, 2 20 C 5 24, 10 26, 15 26 C 5 30, -7 27, -13 19 C -13 24, -11 28, -8 31 C -18 27, -25 18, -25 8 C -28 12, -29 18, -27 23 C -33 15, -34 3, -28 -6 C -32 -5, -35 -1, -36 4 C -35 -7, -28 -16, -18 -19 C -22 -20, -26 -19, -29 -17 C -22 -24, -11 -27, -1 -24 Z"
+        fill="#2b2f38" transform="scale(0.62)"/>
+    </g>
   </svg>
   <div class="cover-eyebrow">Uma homenagem shinobi · edição especial</div>
   <h1 class="cover-title">NARUTO<br>UZUMAKI</h1>
