@@ -303,6 +303,74 @@
 </head>
 <body>
 
+<div id="deviceLockScreen" style="position:fixed;inset:0;background:#12142b;color:#f5ede0;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Bitter',serif;text-align:center;padding:24px;">
+  <div id="deviceLockMsg" style="font-size:15px;max-width:280px;line-height:1.5;">Carregando...</div>
+</div>
+<script>
+(function(){
+  var DEVICE_ID_KEY = 'jornada_naruto_device_id';
+  var API_KEY = 'AIzaSyC58yXOGfhBhVRhWWHd-Cd5zwPFRutVdoA';
+  var PROJECT = 'livros-fotos';
+  var DOC_URL = 'https://firestore.googleapis.com/v1/projects/' + PROJECT + '/databases/(default)/documents/jornada_naruto/lock?key=' + API_KEY;
+  var overlay = document.getElementById('deviceLockScreen');
+  var msg = document.getElementById('deviceLockMsg');
+
+  function unlock(){ overlay.style.display = 'none'; }
+  function blockAccess(){
+    msg.textContent = 'Este link já está vinculado a outro aparelho e não pode ser aberto aqui. Fale com quem te enviou o link.';
+  }
+
+  function getDeviceId(){
+    var id = localStorage.getItem(DEVICE_ID_KEY);
+    if (!id){
+      id = 'dev_' + Date.now() + '_' + Math.random().toString(36).slice(2, 12);
+      localStorage.setItem(DEVICE_ID_KEY, id);
+    }
+    return id;
+  }
+
+  function claimDevice(deviceId){
+    fetch(DOC_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fields: {
+          deviceId: { stringValue: deviceId },
+          registradoEm: { timestampValue: new Date().toISOString() }
+        }
+      })
+    }).then(function(){ unlock(); })
+      .catch(function(){ unlock(); }); // se der erro de rede, libera pra nao travar indevidamente
+  }
+
+  function init(){
+    try{
+      var deviceId = getDeviceId();
+      fetch(DOC_URL, { cache: 'no-store' })
+        .then(function(res){
+          if (res.status === 404){
+            claimDevice(deviceId);
+            return;
+          }
+          if (!res.ok){ unlock(); return; } // erro inesperado: nao bloqueia indevidamente
+          res.json().then(function(data){
+            var savedId = data && data.fields && data.fields.deviceId && data.fields.deviceId.stringValue;
+            if (!savedId || savedId === deviceId){
+              unlock();
+            } else {
+              blockAccess();
+            }
+          }).catch(function(){ unlock(); });
+        })
+        .catch(function(){ unlock(); }); // sem internet: libera pra nao travar indevidamente
+    }catch(e){
+      unlock();
+    }
+  }
+  init();
+})();
+</script>
+
 <!-- ============ CAPA ============ -->
 <section class="cover" id="capa">
   <svg class="headband" viewBox="0 0 260 130" xmlns="http://www.w3.org/2000/svg">
@@ -688,3 +756,4 @@
 
 </body>
 </html>
+
